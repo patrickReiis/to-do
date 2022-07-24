@@ -1,3 +1,4 @@
 connect.js
 node_modules/
 .env
+*.mp4
