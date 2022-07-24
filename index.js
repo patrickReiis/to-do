@@ -97,8 +97,8 @@ const port = 3000;
 						res.writeHead(301, {'Location':`/posts/${postId.rows[0].id}`});
 						res.end()
 					} else {
-						res.writeHead(422);
-						res.end('Dolar Sign $ at the end of the string and double dolar signs $$ are not allowed. You have to specify only the keys "title" and "description"')
+						res.writeHead(422), {'Content-Type': 'application/json'};
+						res.end(JSON.stringify({errorMessage:'Dolar Sign $ at the end of the string and double dolar signs $$ are not allowed.'}))
 					}
 					
 				} else {
@@ -129,8 +129,8 @@ const port = 3000;
 								res.end('Invalid status value')
 							} else {
 								if (hasInvalidCharacter(dataObj)){
-									res.writeHead(400)
-									res.end('Sorry. Dolar Sign $ at the end of the string and double dolar signs $$ are not allowed')
+									res.writeHead(400, {'Content-Type':'application/json'})
+									res.end(JSON.stringify({errorMessage:'Sorry. Dolar Sign $ at the end of the string and double dolar signs $$ are not allowed'}))
 								} else {
 									await updateTable(client, dataObjKeys, dataObjValues, idURL)
 									res.writeHead(204, {'Location':'/posts'});

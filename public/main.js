@@ -1,7 +1,7 @@
 const myURL = new URL('/posts/', window.location.origin);
-const postForm = document.getElementById('form-post');
-const titleForm = document.getElementById('title-post');
-const descriptionForm = document.getElementById('description-post');
+const postForm = document.getElementById('create-form');
+const titleForm = document.getElementById('create-title');
+const descriptionForm = document.getElementById('create-description');
 
 getAllPosts(myURL)
 
@@ -32,11 +32,13 @@ function displayPosts(jsondata, ulElement){
 		textareaDescription.maxLength = 10000;
 		textareaDescription.classList.add('main__description');
 		textareaDescription.textContent = jsondata[i].description;
+		textareaDescription.tabIndex = 2
 
 		const titleDescDiv = document.createElement('div'); // div that will contain title <textarea> and description <textarea>
 		titleDescDiv.classList.add('main-content');
 		titleDescDiv.appendChild(textareaTitle);
 		titleDescDiv.appendChild(textareaDescription);
+		titleDescDiv.tabIndex = 1
 
 		const inputCheckBox = document.createElement('input'); // button that represents if the task is done
 		inputCheckBox.classList.add('done-checkbox');
@@ -48,24 +50,27 @@ function displayPosts(jsondata, ulElement){
 		label.appendChild(inputCheckBox);
 
 		const saveInput = document.createElement('input');
-		saveInput.value = 'update';
-		saveInput.type = 'submit'
+		saveInput.value = 'Update';
+		saveInput.type = 'submit';
+		saveInput.classList.add('button-submit-general', 'create-general-style');
 
 		const deleteInput = document.createElement('input');
 		deleteInput.type = 'button';
 		deleteInput.value = 'Delete';
+		deleteInput.classList.add('button-submit-general', 'create-general-style');
 		deleteInput.addEventListener('click', handleDelete);
 
 		const settingsDiv = document.createElement('div');
 		settingsDiv.classList.add('settings');
 		settingsDiv.appendChild(label);
 		settingsDiv.appendChild(saveInput);
-		settingsDiv.appendChild(deleteInput)
+		settingsDiv.appendChild(deleteInput);
 
 		const formUpdateElement = document.createElement('form');
 		formUpdateElement.appendChild(titleDescDiv);
 		formUpdateElement.appendChild(settingsDiv);
 		formUpdateElement.method = 'POST';
+		formUpdateElement.classList.add('form-data-posts')
 
 		const listElement = document.createElement('li');
 		listElement.appendChild(formUpdateElement);
@@ -73,8 +78,9 @@ function displayPosts(jsondata, ulElement){
 
 		fragment.appendChild(listElement);
 	}
+
 	ulElement.appendChild(fragment);
-	ulElement.addEventListener('submit', handleUpdate)
+	ulElement.addEventListener('submit', handleUpdate);
 
 }
 
@@ -98,7 +104,12 @@ async function fetchAllMethods(method, id, content){
 				reloadPage();
 				
 			} else {
-				console.log(`Error ${responseURL.status}`)
+				const errorObj = await responseURL.json();
+
+				const errorElement = document.getElementById('error-message-POST');
+				errorElement.style.display = 'block'
+				errorElement.textContent = errorObj.errorMessage
+
 			}
 		} catch(err){
 			console.log(err)
@@ -123,7 +134,24 @@ async function fetchAllMethods(method, id, content){
 				} reloadPage();
 				
 			} else {
-				console.log(`Error ${responseURL.status}`)
+
+				const errorObj = await responseURL.json();
+				
+				const errorElement = document.createElement('div');
+				errorElement.textContent = errorObj.errorMessage
+				errorElement.classList.add('error-messages-PUT');
+
+				const listPostElement = document.getElementById(id);
+
+				if (listPostElement.getElementsByClassName('error-messages-PUT').length < 1){
+					listPostElement.appendChild(errorElement)
+
+					const titlePostDiv = listPostElement.getElementsByClassName('main__title')[0];
+					titlePostDiv.style.background = '#FF6868';
+
+					const descPostDiv = listPostElement.getElementsByClassName('main__description')[0];
+					descPostDiv.style.background = '#FF6868';	
+				}
 			}
 		} catch(err){
 			console.log(err)
@@ -211,4 +239,8 @@ function handleDelete(e){
 
 function reloadPage(){
 	history.go(0);
+}
+
+function displayErrorMessages(err){
+
 }

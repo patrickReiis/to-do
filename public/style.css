@@ -1,7 +1,126 @@
-li {
-	list-style: none;
+body{
+	font-family: 'Rubik', sans-serif;
+	background: rgba(10,10,255, 0.1);
+	margin: 0;
+}
+
+#welcome-header{
 	display: flex;
-	justify-content: space-around;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+
+.welcome-h1{
+	font-size: 3rem;
+	color: rgba(10,10,100, 0.8);
+	font-family: 'Edu TAS Beginner', cursive;
+}
+
+#create-description, #create-title, #create-confirm{ /* arrumar fix*/
+	margin-right: 0;
+	margin-left: 0;
+}
+
+#create-div{
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	width: 100%;
+}
+
+#create-form{
+	display: flex;
+	flex-flow: column wrap;
+	width: 40%;
+}
+
+.create-general-style{
+	size: 2rem;
+	width: 100%;
+	font-size: 1rem;
+	box-sizing: border-box;
+	border-radius: 1rem;
+	padding: 0.5rem;
+	margin: 0.25rem 1rem;
+	border: none;
+
+}
+
+.create-general-style:focus{
+	outline: none;
+	border: 2.5px solid rgba(10,10,100, 0.8);
+	box-sizing: border-box;
+}
+
+.button-submit-general{
+	border: 2.5px solid white;
+	cursor: pointer;
+}
+
+.button-submit-general:focus{
+	outline: none;
+}
+
+.button-submit-general:hover{
+	background: rgba(100,100,150,1);
+	transition: 0.5s;
+	color: white;
+}
+
+textarea{
+	font-family: 'Rubik', sans-serif;
+	font-size: 1rem;
+}
+
+input[type="checkbox"]:checked {
+  background: rgba(10,200,10,1);
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: 0;
+  background: lightgray;
+  height: 20px;
+  width: 20px;
+  border: 1px solid white;
+  color: white;
+}
+
+input[type="checkbox"]:after {
+  content: ' ';
+  position: relative;
+  left: 5px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  display: none;
+}
+
+input[type="checkbox"]:checked:after {
+  display: block;
+}
+
+.form-data-posts{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	height: 341px;
+}
+
+.settings input[type='button']{ /* delete button */
+	background: rgba(200,100,100,1);
+	margin: auto 0 0.5rem 0;
+}
+
+.settings input[type='button']:hover{ /* delete button */
+	background: rgba(210,50,50,1);
 }
 
 .main-content{
@@ -12,25 +131,45 @@ li {
 
 #main-only-ul li {
 	margin: 1rem;
+	list-style: none;
+	width: 100%;
+	padding: 0;
+	margin: 3rem 0;
 }
 
-.main-content textarea{
-	border: 1px solid black;
+#main-only-ul {
+	width: 100%;
+	padding: 0;
+	margin: 1rem 0;
+}
+
+.main__description, .main__title{
+	border: 2px dashed rgba(10,10,100, 0.4);
 	resize:none;
+	padding: 0.5rem;
 }
 
-.main-content textarea:nth-of-type(1){
-	border-bottom: none;
+.main__description{
 	overflow-y: visible;
 }
 
-.main-content textarea:focus{
+.main__title{
+	border-bottom: none;
+}
+
+.main__title:focus + .main__description{
+	border-top: none;
+}
+
+.main__description:focus, .main__title:focus{
 	outline: none;
-	border: 2px solid black;
+	border: 2px solid rgba(10,10,100, 0.8);
+	overflow-y: visible;
 }
 
 .settings label{
 	user-select: none;
+	margin: 0.5rem auto;
 }
 
 .done-checkbox{
@@ -40,9 +179,58 @@ li {
 .settings{
 	display: flex;
 	flex-flow: column wrap;
-	justify-content: flex-end;
+	justify-content: flex-start;
+	align-items: center;
+	height: 100%;
+	padding: 0 0.5rem;
 }
 
-form {
+div.rule {
+	height: 10px;
+	background: rgba(10,10,100, 0.8);
 	width: 80%;
+	margin: 4rem auto;
+}
+
+hr {
+	display: none;
+}
+
+#error-message-POST{
+	display: none;
+	color: red;
+	text-align: center;
+	padding: 0.5rem;
+	font-size: 1.25rem;
+}
+
+.error-messages-PUT{
+	color: red;
+	text-align: center;
+	margin: 1.25rem;
+	font-size: 1.25rem;
+}
+
+#credits{
+	text-align: right;
+	padding-right: 1.5rem;
+}
+
+#credits a{
+	text-decoration: underline blue;
+	color:  blue;
+}
+
+#github-icon{
+	vertical-align: middle;
+}
+
+@media screen and (min-width:0px) and (max-width:700px){
+	#create-form{
+		width: 65%;
+	}
+
+	#error-message-POST, .error-messages-PUT{
+	font-size: 1rem;
+}
 }
